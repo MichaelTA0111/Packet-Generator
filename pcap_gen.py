@@ -71,5 +71,8 @@ if __name__ == '__main__':
     # Create 10,000 unequally sized packets
     generate('./output/random_cherries.pcap', random.choices(PACKETS, k=10_000))
 
+    # Create 100,000 unequally sized packets
+    generate('./output/many_random_cherries.pcap', random.choices(PACKETS, k=100_000))
+
     # Create 20,000 equally sized packets
     generate('./output/constant_cherries.pcap', PACKETS[0:1] * 20_000)
