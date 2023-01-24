@@ -85,6 +85,7 @@ if __name__ == '__main__':
     generate(1024, 100_000, 2)
 
     # Vary consumer count
+    generate(128, 100_000, 1)
     generate(128, 100_000, 2)
     generate(128, 100_000, 3)
     generate(128, 100_000, 4)
