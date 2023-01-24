@@ -40,7 +40,7 @@ def generate(packet_size, num_packets, num_consumers, do_read=True):
          num_consumers (int): The number of consumers intended for use.
          do_read (bool): Whether to read the file after generation or not.
     """
-    filename = f'../output/{packet_size:,}B_{num_packets:,}P_{num_consumers}C.pcap'
+    filename = f'../output/{packet_size:_}B__{num_packets:_}P__{num_consumers}C.pcap'
 
     # Create/clear the contents of the pcap file
     open(filename, 'w').close()
