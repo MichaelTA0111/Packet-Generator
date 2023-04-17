@@ -61,6 +61,44 @@ def generate(packet_size, num_packets, num_consumers, do_read=True):
         read(filename)
 
 
+def calculate_consumer_count(filename):
+    """ Read the contents of a pcap file and print the expected consumer counts.
+
+    Args:
+        filename (str): Path to a pcap file.
+    """
+    counters = [0] * 10
+
+    # Iterate through each packet in the stream
+    for _length, _t, pkt in rpcap(filename):
+        # Check the packet payload to determine the expected consumer
+        if pkt[0] == 160:
+            counters[0] += 1
+        elif pkt[0] == 161:
+            counters[1] += 1
+        elif pkt[0] == 162:
+            counters[2] += 1
+        elif pkt[0] == 163:
+            counters[3] += 1
+        elif pkt[0] == 164:
+            counters[4] += 1
+        elif pkt[0] == 165:
+            counters[5] += 1
+        elif pkt[0] == 166:
+            counters[6] += 1
+        elif pkt[0] == 167:
+            counters[7] += 1
+        elif pkt[0] == 168:
+            counters[8] += 1
+        elif pkt[0] == 169:
+            counters[9] += 1
+
+    print(f'Expected consumer counters for packet stream {filename}:')
+    for i, counter in enumerate(counters):
+        print(f'Consumer {i + 1}: {counter}')
+    print('\n')
+
+
 if __name__ == '__main__':
     #
     # Generate packets
@@ -96,3 +134,38 @@ if __name__ == '__main__':
     generate(512, 100_000, 8)
     generate(512, 100_000, 9)
     generate(512, 100_000, 10)
+
+    #
+    # Determine expected packet counters
+    #
+
+    # Varied packet counts
+    calculate_consumer_count('../packet_streams/512B__20_000P__2C.pcap')
+    calculate_consumer_count('../packet_streams/512B__40_000P__2C.pcap')
+    calculate_consumer_count('../packet_streams/512B__60_000P__2C.pcap')
+    calculate_consumer_count('../packet_streams/512B__80_000P__2C.pcap')
+    calculate_consumer_count('../packet_streams/512B__100_000P__2C.pcap')
+    calculate_consumer_count('../packet_streams/512B__120_000P__2C.pcap')
+    calculate_consumer_count('../packet_streams/512B__140_000P__2C.pcap')
+    calculate_consumer_count('../packet_streams/512B__160_000P__2C.pcap')
+    calculate_consumer_count('../packet_streams/512B__180_000P__2C.pcap')
+    calculate_consumer_count('../packet_streams/512B__200_000P__2C.pcap')
+
+    # Varied packet sizes
+    calculate_consumer_count('../packet_streams/512B__100_000P__2C.pcap')
+    calculate_consumer_count('../packet_streams/1_024B__100_000P__2C.pcap')
+    calculate_consumer_count('../packet_streams/2_048B__100_000P__2C.pcap')
+    calculate_consumer_count('../packet_streams/4_096B__100_000P__2C.pcap')
+    calculate_consumer_count('../packet_streams/8_192B__100_000P__2C.pcap')
+
+    # Varied consumer counts
+    calculate_consumer_count('../packet_streams/512B__100_000P__1C.pcap')
+    calculate_consumer_count('../packet_streams/512B__100_000P__2C.pcap')
+    calculate_consumer_count('../packet_streams/512B__100_000P__3C.pcap')
+    calculate_consumer_count('../packet_streams/512B__100_000P__4C.pcap')
+    calculate_consumer_count('../packet_streams/512B__100_000P__5C.pcap')
+    calculate_consumer_count('../packet_streams/512B__100_000P__6C.pcap')
+    calculate_consumer_count('../packet_streams/512B__100_000P__7C.pcap')
+    calculate_consumer_count('../packet_streams/512B__100_000P__8C.pcap')
+    calculate_consumer_count('../packet_streams/512B__100_000P__9C.pcap')
+    calculate_consumer_count('../packet_streams/512B__100_000P__10C.pcap')
